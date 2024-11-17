@@ -1,9 +1,12 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
 module.exports = {
     mode: 'production',
+    entry: './src/index.js',
     optimization:{
         minimizer:[
             new CssMinimizerPlugin(),'...'
@@ -11,10 +14,45 @@ module.exports = {
     },
     output:{
         filename: 'main.[contenthash].js',
-        clean:true
+        clean:true,
+        path: path.resolve(__dirname,'dist'),
     },
     module:{
         rules:[
+            {
+                test: /\.css$/,
+                exclude: /styles\.css$/,
+                use: ['style-loader','css-loader']
+            },
+            {
+                test: /styles\.css$/,
+                use: [MiniCssExtractPlugin.loader,'css-loader']
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|webp|avif)$/i,
+                type: 'asset/resource',
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+            },
+            {
+                test: /\.(csv|tsv)$/i,
+                use: ['csv-loader'],
+            },
+            {
+                test: /\.xml$/i,
+                use: ['xml-loader'],
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                        options: {minimize:true},
+                    }
+                ]
+            },
             {
                 test: /\.m?js$/,
                 exclude: /node_modules/,
@@ -24,30 +62,6 @@ module.exports = {
                     presets: ['@babel/preset-env']
                   }
                 }
-            },
-            {
-                test: /\.css$/,
-                exclude: /styles\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-           },
-           {
-                test: /styles\.css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader'
-                ]
-           },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: 'html-loader',
-                        options: {minimize:true},
-                    }
-                ]
             },
         ]
     },

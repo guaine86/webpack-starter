@@ -1,3 +1,37 @@
-html,body{
-    background-color: grey;
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body{
+    background-image: linear-gradient(to bottom, white 0%, rgba(252, 220, 103, 0.5) 100%);    
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: 'MiFuente';
+    src: url('./assets/WorkforceScale.otf') format('opentype'),
+         url('./assets/WorkforceGradient.otf') format('opentype'),
+         url('./assets/Ancient\ Medium.ttf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+}
+.contenedor{
+    width: min(90%, 120rem);
+    margin: 2rem auto;
+}
+.imagen{
+    max-width: 100%;
+}
+.centrar-texto{
+    text-align: center;
+}
+.probando{
+    padding:2rem;
+    color:black;
+    font-family: 'MiFuente';
+    font-size: 72px;
+    background-image: url('./img/logo.png');
 }

@@ -3,19 +3,15 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const { runtime } = require('webpack');
 
 module.exports = {
     mode: 'production',
-    entry: './src/index.js',
-    optimization:{
-        minimizer:[
-            new CssMinimizerPlugin(),'...'
-        ]
+    entry: {
+        index: './src/index.js', 
     },
-    output:{
-        filename: 'main.[contenthash].js',
-        clean:true,
-        path: path.resolve(__dirname,'dist'),
+    devServer:{
+        static: './dist',
     },
     module:{
         rules:[
@@ -57,18 +53,24 @@ module.exports = {
                 test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
-                  loader: "babel-loader",
-                  options: {
-                    presets: ['@babel/preset-env']
-                  }
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
                 }
             },
         ]
     },
+    optimization:{
+        runtimeChunk: 'single',
+        minimizer: [
+            new CssMinimizerPlugin(),'...',
+        ],
+    },
     plugins:[
         new HtmlWebPackPlugin({
-            template: './src/index.html',
             filename:'./index.html',
+            template: './src/index.html',
         }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
@@ -79,5 +81,10 @@ module.exports = {
                 {from: 'src/assets', to:'assets/'}
             ]
         })
-    ]
+    ],
+    output:{
+        filename: 'main.[contenthash].js',
+        path: path.resolve(__dirname,'dist'),
+        clean: true,
+    },  
 }

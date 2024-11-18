@@ -6,16 +6,13 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
-    optimization:{
-        minimizer:[
-            new CssMinimizerPlugin(),
-        ]
+    entry: {
+        index: './src/index.js',
+        print: './src/print.js',
     },
-    output:{
-        filename: 'main.[contenthash].js',
-        clean:true,
-        path: path.resolve(__dirname,'dist'),
+    devtool: 'inline-source-map',
+    devServer:{
+        static: './dist',
     },
     module:{
         rules:[
@@ -55,10 +52,17 @@ module.exports = {
             },
         ]
     },
+    optimization:{
+        runtimeChunk: 'single',
+        minimize: false,
+        minimizer:[
+            new CssMinimizerPlugin(),
+        ],
+    },
     plugins:[
         new HtmlWebPackPlugin({
-            template: './index.html',
             filename:'./index.html',
+            template: './src/index.html',
         }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
@@ -69,5 +73,10 @@ module.exports = {
                 {from: 'src/assets', to:'assets/'}
             ]
         })
-    ]
+    ],
+    output:{
+        filename: '[name].[contenthash].js',
+        path: path.resolve(__dirname,'dist'),
+        clean:true,
+    },   
 }

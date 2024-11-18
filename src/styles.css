@@ -28,10 +28,34 @@ body{
 .centrar-texto{
     text-align: center;
 }
+
 .probando{
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
     padding:2rem;
     color:black;
     font-family: 'MiFuente';
     font-size: 72px;
-    background-image: url('./img/logo.png');
+    background-image: url('./img/webpack.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 50rem;
+}
+
+.probando button{
+    grid-row: 3/4;
+    width: min(26rem,60%);
+    height: 5rem;
+    justify-self: center;
+    align-self: end;
+}
+
+@media (min-width: 1260px){
+    .probando{
+        height: 60rem;
+    }
+    .probando button{
+        height: 20%;
+    }
 }

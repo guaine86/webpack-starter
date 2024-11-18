@@ -5,9 +5,10 @@
   "private": "true",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open --port=8088",
     "build": "webpack --config webpack.prod.js",
-    "build:dev": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server --open --port=8088"
+    "build:dev": "webpack --config webpack.config.js"
   },
   "author": "Edward Wayne Cruz",
   "license": "ISC",

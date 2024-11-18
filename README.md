@@ -10,3 +10,4 @@ Y para construir el build
 ```
 npm run build
 ```
+Para el modo desarrollo hay como ejemplo como incorporar mas de un punto de entrada de archivos .js
